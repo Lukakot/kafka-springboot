@@ -1,23 +1,19 @@
 package com.kafkastreams.controller;
 
-import com.kafkastreams.domain.OrderCountPerStoreDTO;
 import com.kafkastreams.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
-import static com.kafkastreams.topology.OrdersTopology.GENERAL_ORDERS;
 
 @RestController
 @RequestMapping("/v1/orders")
 public class OrdersController {
 
 
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @Autowired
     public OrdersController(OrderService orderService) {
@@ -25,9 +21,15 @@ public class OrdersController {
     }
 
     @GetMapping("/count/{order_type}")
-    public List<OrderCountPerStoreDTO> ordersCount(@PathVariable("order_type") String orderType){
+    public ResponseEntity<?> ordersCount(@PathVariable("order_type") String orderType,
+                                      @RequestParam(value = "location_id", required = false) String locationId){
 
-        return orderService.getOrdersCount(orderType);
+        if(StringUtils.hasLength(locationId)){
+            return ResponseEntity.ok(orderService.getOrdersCountByLocationId(orderType, locationId));
+        }
+        return ResponseEntity.ok(orderService.getOrdersCount(orderType));
     }
+
+
 
 }

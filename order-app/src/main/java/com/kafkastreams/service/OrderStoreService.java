@@ -1,13 +1,13 @@
 package com.kafkastreams.service;
 
 import org.apache.kafka.streams.StoreQueryParameters;
-import org.apache.kafka.streams.state.QueryableStoreType;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
-import org.apache.kafka.streams.state.ReadOnlyWindowStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class OrderStoreService {
@@ -21,8 +21,8 @@ public class OrderStoreService {
 
     public ReadOnlyKeyValueStore<String, Long> ordersCountStore(String storeName) {
 
-        return streamsBuilderFactoryBean
-                .getKafkaStreams()
+        return Objects
+                .requireNonNull(streamsBuilderFactoryBean.getKafkaStreams())
                 .store(StoreQueryParameters.fromNameAndType(
                         storeName,
                         QueryableStoreTypes.keyValueStore())

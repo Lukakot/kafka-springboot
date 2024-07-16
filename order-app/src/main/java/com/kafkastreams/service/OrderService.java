@@ -2,7 +2,6 @@ package com.kafkastreams.service;
 
 import com.kafkastreams.domain.OrderCountPerStoreDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +43,16 @@ public class OrderService {
             case RESTAURANT_ORDERS -> orderStoreService.ordersCountStore(RESTAURANT_ORDERS_COUNT);
             default -> throw new IllegalStateException("Not a valid option");
         };
+    }
+
+    public OrderCountPerStoreDTO getOrdersCountByLocationId(String orderType, String locationId) {
+
+        var ordersCountStore = getOrderStore(orderType);
+        var orderCount = ordersCountStore.get(locationId);
+
+        if(orderCount!= null){
+            return new OrderCountPerStoreDTO(locationId, orderCount);
+        }
+        return null;
     }
 }
