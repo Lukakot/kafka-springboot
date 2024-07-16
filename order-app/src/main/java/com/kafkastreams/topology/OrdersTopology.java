@@ -21,7 +21,9 @@ import java.time.Duration;
 public class OrdersTopology {
 
     public static final String ORDERS = "orders";
+    public static final String GENERAL_ORDERS = "general_orders";
 
+    public static final String RESTAURANT_ORDERS = "restaurant_orders";
     public static final String GENERAL_ORDERS_COUNT = "general_orders_count";
     public static final String GENERAL_ORDERS_COUNT_WINDOWS = "general_orders_count_window";
     public static final String GENERAL_ORDERS_REVENUE = "general_orders_revenue";
