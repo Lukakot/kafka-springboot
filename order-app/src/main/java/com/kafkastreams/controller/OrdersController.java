@@ -1,11 +1,13 @@
 package com.kafkastreams.controller;
 
+import com.kafkastreams.domain.AllOrdersCountPerStoreDTO;
 import com.kafkastreams.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
@@ -28,6 +30,17 @@ public class OrdersController {
             return ResponseEntity.ok(orderService.getOrdersCountByLocationId(orderType, locationId));
         }
         return ResponseEntity.ok(orderService.getOrdersCount(orderType));
+    }
+
+    @GetMapping("/revenue/{order_type}")
+    public ResponseEntity<?> revenueByOrderType(@PathVariable("order_type") String orderType) {
+        return ResponseEntity.ok(orderService.revenueByOrderType(orderType));
+    }
+
+    @GetMapping("/count")
+    public List<AllOrdersCountPerStoreDTO> allOrdersCount(){
+
+        return orderService.getAllOrdersCount();
     }
 
 
