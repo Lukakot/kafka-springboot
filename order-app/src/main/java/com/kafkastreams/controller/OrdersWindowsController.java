@@ -2,7 +2,6 @@ package com.kafkastreams.controller;
 
 import com.kafkastreams.domain.OrdersCountPerStoreByWindowsDTO;
 import com.kafkastreams.service.OrdersWindowService;
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 

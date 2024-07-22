@@ -54,7 +54,7 @@ public class OrdersWindowService {
         return StreamSupport.stream(keyValueSpliterator, false)
                 .map(keyValue -> new OrdersCountPerStoreByWindowsDTO(
                         keyValue.key.key(),
-                        keyValue.value.runnuingOrderCount().longValue(),
+                        keyValue.value.runningOrderCount().longValue(),
                         orderTypeEnum,
                         LocalDateTime.ofInstant(keyValue.key.window().startTime(), ZoneId.of("GMT")),
                         LocalDateTime.ofInstant(keyValue.key.window().endTime(), ZoneId.of("GMT"))
